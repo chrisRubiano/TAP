@@ -1,9 +1,14 @@
-# Cristian Raul Samaniego Rubiano
-# grados.py convierte centigrados a fahrenheit o kelvin,
-# y fahrenheit a centigrados
-# 19/01/2015
+#!/usr/bin/python
+'''
+Autor: Cristian Samaniego
+Fecha: 03/02/2016
+
+modifica grados, con argumentos
+TODO:
+'''
 
 import sys
+import argparse
 
 
 """
@@ -43,4 +48,9 @@ def main():
         print "El numero de argumentos no es el correcto."
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-g", "--grados", help="el tipo de grados a convertir")
+    parser.add_argument("-c", "--cantidad", help="el numero de grados",
+                        type=int)
+    args = parser.parse_args()
     main()

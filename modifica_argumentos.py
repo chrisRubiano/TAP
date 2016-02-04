@@ -1,15 +1,17 @@
+#!/usr/bin/python
 '''
 Autor: Cristian Samaniego
-Fecha: 26/01/2016
+Fecha: 03/02/2016
 
-Lee y escribe nombres
+modifica calificaciones, con argumentos
 '''
+import argparse
 
 
 def modifica_calificaciones(lista_alumnos, porcentaje):
     for al in lista_alumnos:
         if al[1] <= 100:
-            al[1] += ((al[1]/100) * porcentaje)
+            al[1] += ((al[1] / 100) * porcentaje)
             if al[1] > 100:
                 al[1] = 100.0
             if al[1] < 0:
@@ -49,4 +51,11 @@ def main(archivoEntrada, archivoSalida, porcentaje):
         print "no existen nombres"
 
 if __name__ == '__main__':
-    main("nombres.csv", "salida.csv", 5)
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-i", "--input", help="archivo de entrada")
+    parser.add_argument("-o", "--output", help="archivo de salida")
+    parser.add_argument("-p", "--porcentaje",
+                        help="porcentaje en que cambia la calificacion",
+                        type=float)
+    args = parser.parse_args()
+    main(args.input, args.output, args.porcentaje)
