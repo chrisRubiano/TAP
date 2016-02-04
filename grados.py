@@ -37,20 +37,14 @@ def convierte_grados(grados, a="centigrados"):
 """
 
 
-def main():
-    if len(sys.argv) == 3:
-        a = convierte_grados(float(sys.argv[1]), sys.argv[2])
-        print "%s son %s" % (sys.argv[1], a)
-    elif len(sys.argv) == 2:
-        a = convierte_grados(float(sys.argv[1]))
-        print "%s son %s" % (sys.argv[1], a)
-    else:
-        print "El numero de argumentos no es el correcto."
+def main(grados, tipo):
+    a = convierte_grados(grados, tipo)
+    print "%s son %s" % (grados, a)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-g", "--grados", help="el tipo de grados a convertir")
-    parser.add_argument("-c", "--cantidad", help="el numero de grados",
+    parser.add_argument("-t", "--tipo", help="el tipo de grados a convertir")
+    parser.add_argument("-g", "--grados", help="el numero de grados",
                         type=int)
     args = parser.parse_args()
-    main()
+    main(args.grados, args.tipo)
