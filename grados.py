@@ -45,6 +45,6 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("-t", "--tipo", help="el tipo de grados a convertir")
     parser.add_argument("-g", "--grados", help="el numero de grados",
-                        type=int)
+                        type=float)
     args = parser.parse_args()
     main(args.grados, args.tipo)
