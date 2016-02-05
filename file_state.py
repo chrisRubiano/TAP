@@ -12,10 +12,13 @@ import argparse
 def main(dir, file):
     try:
         (mode, ino, dev, nlink, uid, x, xx, xxx, ssss, sss) = os.stat(dir+"/"+file)
+        #m = os.stat(dir+"/"+file)
+        #inode = m.st_ino
         print "si existe el archivo %s" % (file)
         print str(ino)
     except Exception, e:
         print "no existe el archivo"
+
 
 
 
