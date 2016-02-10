@@ -15,8 +15,8 @@ def find_file(dir, file):
         inode = m.st_ino
         ex = "%s si existe en el directorio %s" % (file, dir)
         ex +="\nSu inode es: "+str(inode)
-    except Exception, e:
-        ex = "no existe el archivo, error: "+e
+    except Exception:
+        ex = "no existe el archivo"
     return ex
 
 
