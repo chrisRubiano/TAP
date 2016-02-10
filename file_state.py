@@ -9,23 +9,28 @@ import os
 import argparse
 
 
-def main(dir, file):
+def find_file(dir, file):
     try:
-        #(mode, ino, dev, nlink, uid, gid, size, atime, mtime, ctime) = os.stat(dir+"/"+file)
         m = os.stat(dir+"/"+file)
         inode = m.st_ino
-        print "%s si existe en el directorio %s" % (file, dir)
-        print str(inode)
+        ex = "%s si existe en el directorio %s" % (file, dir)
+        ex +="\nSu inode es: "+str(inode)
     except Exception, e:
-        print "no existe el archivo"
-        print e
+        ex = "no existe el archivo, error: "+e
+    return ex
+
+
+def main(dir, file):
+    ar = find_file(dir, file)
+    print ar
+
 
 
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument("-d", "--dir", help="Directorio del archivo")
+    parser.add_argument("-d", "--dir", help="Directorio del archivo", default=".")
     parser.add_argument("-f", "--file", help="nombre del archivo")
     args = parser.parse_args()
     main(args.dir, args.file)
