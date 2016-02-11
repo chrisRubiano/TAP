@@ -35,8 +35,8 @@ def main(pdir):
     fileList = file_list(absPath)
     filesInt = file_count(fileList, absPath)
     dirInt = dir_count(fileList, absPath)
-    print str(filesInt)
-    print str(dirInt)
+    print "Hay %i archivos en el directorio" % (filesInt)
+    print "Hay %i carpetas en el directorio" % (dirInt)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
