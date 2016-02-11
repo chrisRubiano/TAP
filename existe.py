@@ -11,10 +11,10 @@ import argparse
 
 def find_file(dir, file):
     try:
-        m = os.stat(dir+"/"+file)
+        m = os.stat(dir + "/" + file)
         inode = m.st_ino
         ex = "%s si existe en el directorio %s" % (file, dir)
-        ex +="\nSu inode es: "+str(inode)
+        ex += "\nSu inode es: " + str(inode)
     except Exception:
         ex = "no existe el archivo"
     return ex
@@ -23,9 +23,6 @@ def find_file(dir, file):
 def main(dir, file):
     ar = find_file(dir, file)
     print ar
-
-
-
 
 
 if __name__ == '__main__':

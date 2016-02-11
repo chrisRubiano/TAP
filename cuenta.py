@@ -9,34 +9,70 @@ import os
 import argparse
 
 
-def file_list(absPath):
-    fileList = os.listdir(absPath)
-    return fileList
+def dir_exists(absPath):
+    try:
+        m = os.stat(absPath+"/")
+        ex = True
+    except Exception:
+        ex = False
+    return ex
 
 
-def file_count(fileList, absPath):
+def total_file_list(absPath):
+    totalFileList = os.listdir(absPath)
+    return totalFileList
+
+
+def file_count(totalFileList, absPath):
     fc = 0
-    for f in fileList:
+    for f in totalFileList:
         if os.path.isfile("%s/%s" % (absPath, f)):
             fc += 1
     return fc
 
 
-def dir_count(fileList, absPath):
+def dir_count(totalFileList, absPath):
     dc = 0
-    for d in fileList:
+    for d in totalFileList:
         if os.path.isdir("%s/%s" % (absPath, d)):
             dc += 1
     return dc
 
+def file_list(totalFileList, absPath):
+    files = []
+    for f in totalFileList:
+        if os.path.isfile("%s/%s" % (absPath, f)):
+            files.append(f)
+    return files
+
+def dir_list(totalFileList, absPath):
+    dirs = []
+    for d in totalFileList:
+        if os.path.isdir("%s/%s" % (absPath, d)):
+            dirs.append(d)
+    return dirs
+
 
 def main(pdir):
     absPath = os.path.abspath(pdir)
-    fileList = file_list(absPath)
-    filesInt = file_count(fileList, absPath)
-    dirInt = dir_count(fileList, absPath)
-    print "Hay %i archivos en el directorio" % (filesInt)
-    print "Hay %i carpetas en el directorio" % (dirInt)
+    exists = dir_exists(absPath)
+    if exists:
+        totalFileList = total_file_list(absPath)
+        filesInt = file_count(totalFileList, absPath)
+        dirInt = dir_count(totalFileList, absPath)
+        fileList = file_list(totalFileList, absPath)
+        dirList = dir_list(totalFileList, absPath)
+        print "Archivos:"
+        for f in fileList:
+            print "\t%s" % (f)
+        print "Hay %i archivos en el directorio" % (filesInt)
+        print "Carpetas:"
+        for d in dirList:
+            print "\t%s" % (d)
+        print "Hay %i carpetas en el directorio" % (dirInt)
+    else:
+        print "el directorio no existe"
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
