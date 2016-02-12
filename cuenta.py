@@ -11,7 +11,7 @@ import argparse
 
 def dir_exists(absPath):
     try:
-        m = os.stat(absPath+"/")
+        m = os.stat(absPath + "/")
         ex = True
     except Exception:
         ex = False
@@ -38,12 +38,14 @@ def dir_count(totalFileList, absPath):
             dc += 1
     return dc
 
+
 def file_list(totalFileList, absPath):
     files = []
     for f in totalFileList:
         if os.path.isfile("%s/%s" % (absPath, f)):
             files.append(f)
     return files
+
 
 def dir_list(totalFileList, absPath):
     dirs = []
