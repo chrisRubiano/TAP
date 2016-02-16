@@ -64,7 +64,6 @@ def dir_list(totalFileList, absPath):
 
 def main(pdir):
     absPath = os.path.abspath(pdir)
-    exists = False
     exists = dir_exists(absPath)
     if exists:
         isDir = is_dir(absPath)
