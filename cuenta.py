@@ -10,10 +10,17 @@ import argparse
 
 
 def dir_exists(absPath):
-    try:
-        m = os.stat(absPath + "/")
+    if os.path.exists(absPath):
         ex = True
-    except Exception:
+    else:
+        ex = False
+    return ex
+
+
+def is_dir(absPath):
+    if os.path.isdir(absPath):
+        ex = True
+    else:
         ex = False
     return ex
 
@@ -57,23 +64,28 @@ def dir_list(totalFileList, absPath):
 
 def main(pdir):
     absPath = os.path.abspath(pdir)
+    exists = False
     exists = dir_exists(absPath)
     if exists:
-        totalFileList = total_file_list(absPath)
-        filesInt = file_count(totalFileList, absPath)
-        dirInt = dir_count(totalFileList, absPath)
-        fileList = file_list(totalFileList, absPath)
-        dirList = dir_list(totalFileList, absPath)
-        print "Archivos:"
-        for f in fileList:
-            print "\t%s" % (f)
-        print "Hay %i archivos en el directorio" % (filesInt)
-        print "Carpetas:"
-        for d in dirList:
-            print "\t%s" % (d)
-        print "Hay %i carpetas en el directorio" % (dirInt)
+        isDir = is_dir(absPath)
+        if isDir:
+            totalFileList = total_file_list(absPath)
+            filesInt = file_count(totalFileList, absPath)
+            dirInt = dir_count(totalFileList, absPath)
+            fileList = file_list(totalFileList, absPath)
+            dirList = dir_list(totalFileList, absPath)
+            print "Archivos:"
+            for f in fileList:
+                print "\t%s" % (f)
+            print "Hay %i archivos en el directorio" % (filesInt)
+            print "Carpetas:"
+            for d in dirList:
+                print "\t%s" % (d)
+            print "Hay %i carpetas en el directorio" % (dirInt)
+        else:
+            print "La ruta especificada es de un archivo"
     else:
-        print "el directorio no existe"
+        print "La ruta especificada no existe"
 
 
 if __name__ == '__main__':
