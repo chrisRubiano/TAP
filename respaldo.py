@@ -10,6 +10,19 @@ TODO:   +copiar cuando solo es un archivo
 import os
 import argparse
 import shutil
+import string
+
+
+def rename_dir(abspath):
+    splitPath = string.rsplit(abspath, "/", 1)
+    x = splitPath[1][-1:]
+    if x.isdigit():
+        splitPath[1] = splitPath[1][:-1] + str(int(x)+1)
+    else:
+        splitPath[1] = splitPath[1]+"2"
+    #splitPath[1] = splitPath[1]+"x"
+    absPath = os.path.join(splitPath[0], splitPath[1])
+    return absPath
 
 
 def dir_exists(absPath):
@@ -48,8 +61,11 @@ def total_file_list(absPath):
     return totalFileList
 
 
-def file_copy(absPathOri, absPathRes):
+def dir_copy(absPathOri, absPathRes):
     shutil.copytree(absPathOri, absPathRes)
+
+def file_copy(absPathOri, absPathRes):
+    shutil.copy(absPathOri, absPathRes)
 
 
 def main(origen, respaldo):
@@ -68,11 +84,19 @@ def main(origen, respaldo):
             if not isDirResp:
                 print "la ruta destino es un archivo"
             else:
-                file_copy(absPathOri, absPathRes)
+                if is_dir(absPathOri):
+                    while dir_exists(absPathRes):
+                        absPathRes = rename_dir(absPathRes)
+                    dir_copy(absPathOri, absPathRes)
+                else:
+                    file_copy(absPathOri, absPathRes)
         else:
-            file_copy(absPathOri, absPathRes)
+            if is_dir(absPathOri):
+                dir_copy(absPathOri, absPathRes)
+            else:
+                file_copy(absPathOri, absPathRes)
     else:
-        print "no existe el directorio de origen"
+        print "no existe el directorio o archivo de origen"
 
 
 if __name__ == '__main__':
