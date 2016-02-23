@@ -62,7 +62,11 @@ def total_file_list(absPath):
 
 
 def dir_copy(absPathOri, absPathRes):
-    shutil.copytree(absPathOri, absPathRes)
+    #shutil.copytree(absPathOri, absPathRes)
+    os.makedirs(absPathRes)
+    os.chdir(absPathRes)
+    shutil.make_archive("respaldo", "gztar", absPathRes, absPathOri)
+
 
 def file_copy(absPathOri, absPathRes):
     shutil.copy(absPathOri, absPathRes)
