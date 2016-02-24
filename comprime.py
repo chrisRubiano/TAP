@@ -1,7 +1,7 @@
 #!/usr/bin/python
 '''
 Autor: Cristian Samaniego
-Fecha: 17/02/2016
+Fecha: 24/02/2016
 
 Comprimimos un directorio origen y respaldamos en un directorio destino
 TODO:   +renombrar archivos
