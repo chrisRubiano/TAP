@@ -12,29 +12,23 @@ import shutil
 import string
 
 
-def rename_dir(abspath):
-    splitPath = string.rsplit(abspath, "/", 1)
-    x = splitPath[1][-1:]
-    if x.isdigit():
-        splitPath[1] = splitPath[1][:-1] + str(int(x)+1)
-    else:
-        splitPath[1] = splitPath[1]+"2"
-    absPath = os.path.join(splitPath[0], splitPath[1])
-    return absPath
+def rename_file(absPathRes):
+    """
 
-
-def rename_file(path):
-    splitPath = string.rsplit(path, "/", 1)
+    :param absPathRes: La ruta de la carpeta donde se guardara el respaldo
+    :return: el nombre de archivo de respaldo
+    """
+    splitPath = string.rsplit(absPathRes, "/", 1)
     filename = splitPath[1]
     filepath = splitPath[0]
-    while file_exists(path):
+    while file_exists(absPathRes):
         x = filename[-1:]
         if x.isdigit():
-            filename = filename[:-1] + str(int(x)+1)
+            filename = filename[:-1] + str(int(x) + 1)
         else:
-            filename + "2"
-        fullPath = os.path.join(filepath, filename)
-    return fullPath
+            filename += "2"
+        absPathRes = os.path.join(filepath, filename)
+    return filename
 
 
 def dir_exists(absPath):
@@ -56,7 +50,9 @@ def file_exists(absPath):
     :param absPath: el absolute path del directorio
     :return: True si existe el directorio, False si no existe
     """
-    if os.path.exists(absPath+".tar.gz"):
+
+    path = absPath + ".tar.gz"
+    if os.path.exists(path):
         ex = True
     else:
         ex = False
@@ -87,7 +83,11 @@ def total_file_list(absPath):
 
 
 def dir_copy(absPathOri, absPathRes):
-    #shutil.copytree(absPathOri, absPathRes)
+    """
+
+    :param absPathOri: el absolute path del directorio origen
+    :param absPathRes: el absolute path del directorio del respaldo
+    """
     if not dir_exists(absPathRes):
         os.makedirs(absPathRes)
     os.chdir(absPathRes)
@@ -101,9 +101,12 @@ def dir_copy(absPathOri, absPathRes):
         shutil.make_archive(filename, "gztar", absPathRes, absPathOri)
 
 
-
-
 def file_copy(absPathOri, absPathRes):
+    """
+
+    :param absPathOri: el absolute path del directorio origen
+    :param absPathRes: el absolute path del directorio del respaldo
+    """
     shutil.copy(absPathOri, absPathRes)
 
 
