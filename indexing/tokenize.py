@@ -15,6 +15,13 @@ import os
 def get_html_files():
 
 
+def save_index(fileName, index):
+    try:
+        with open(fileName, "wb") as fh:
+            pickle.dump(index, fh)
+    except:
+        print("error al guardar diccionario %s" % archivo)
+
 
 def remove_punctuation(text):
     """
