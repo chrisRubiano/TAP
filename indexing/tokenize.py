@@ -8,11 +8,13 @@ import unicodedata
 import pickle
 from dircache import listdir
 
+
 def remove_puntuaction(text):
     
     punctutation_cats = set(['pc', 'Pd', 'Ps', 'Pe', 'P1', 'Pf', 'Po'])
     return ''.join( x for x in text
                     if unicodedata.category(x) not in punctutation_cats)
+
 
 def lee_archivo(nombre_archivo):
     try:
@@ -23,6 +25,7 @@ def lee_archivo(nombre_archivo):
         html = ""
         print ("no se pudo leer el archivo %s" %nombre_archivo)
     return html
+
 
 def get_texto (soup):
     html_body = soup.find_all(itemprop='articleBody')
@@ -39,6 +42,7 @@ def get_texto (soup):
         texto = ""
     return texto
 
+
 def get_words (texto):
     word_list = texto.split()
     clean_word_list = []
@@ -46,13 +50,15 @@ def get_words (texto):
         clean_word_list.append( remove_puntuaction( word ))
     return clean_word_list
 
+
 def update_dictionary( diccionario, lista_palabras):
     for l in lista_palabras:
         if l not in diccionario:
             diccionario[l] = 1
         else:
             diccionario[l] +=1
-        
+
+
 def make_index(diccionario, lista_palabras, documento):
     for posicion,l in enumerate(lista_palabras):
         if l not in diccionario:
@@ -61,7 +67,8 @@ def make_index(diccionario, lista_palabras, documento):
             temp = diccionario[l]
             temp[1].append(posicion)
             diccionario[l] = temp  
-            
+
+    
 def guarda_indice(archivo, indice):
     try:
         with open(archivo, "wb") as fh:
@@ -71,7 +78,7 @@ def guarda_indice(archivo, indice):
         print "Error al guardar el diccionario %s" % archivo  
 
 
-if __name__ == '__main__':
+def main():
     archivos_html = []
     archivos = listdir('.')
     for archivo in archivos:
@@ -105,3 +112,7 @@ if __name__ == '__main__':
     guarda_indice("indice.pickle", master_index)
     print doc_index
     guarda_indice("indice_doc.pickle", doc_index)
+
+
+if __name__ == '__main__':
+    main()

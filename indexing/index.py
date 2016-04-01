@@ -1,11 +1,12 @@
 #!/usr/bin/python
 '''
-Created on Feb 29, 2016
+Autor: Cristian Samaniego
 
-@author: fabianvzla
+
 '''
 import urllib2
 from bs4 import BeautifulSoup
+
 
 def get_url(html):
     lista_urls=[]
@@ -21,6 +22,7 @@ def get_url(html):
         
     return lista_urls
 
+
 def lee_archivo(archivo):
     try:
         with open(archivo, "r") as fh:
@@ -28,6 +30,7 @@ def lee_archivo(archivo):
     except:
         texo=" "
     return texto
+
 
 def save_file(texto,nombre_archivo):
     try:
@@ -49,13 +52,12 @@ def get_html(url):
         print ("no se obtuvo html de %s"%url)
     return html
 
+
 def main():
     archivo="wired.html"
     url="http://www.wired.com"
     HTML =get_html(url)
-    #print HTML
     save_file(HTML, archivo)
-    # url_list=["http://www.wired.com", "http://www.theverge.com","http://www.techcrunch.com"]
     url_list=get_url(HTML)
     archivo_contador="contador.txt"
     contador=int(lee_archivo("contador.txt"))
@@ -68,12 +70,7 @@ def main():
         contador+=1
     contador_str=str(contador)
     save_file(contador_str, archivo_contador)
+
+
 if __name__ == '__main__':  
     main()
-
-
-#url="https://www.google.com"
-#respuesta=urllib2.urlopen(url)
-#html=respuesta.read()
-#respuesta.close()
-#print html 
