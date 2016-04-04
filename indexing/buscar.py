@@ -15,7 +15,7 @@ def main(args):
     wordList = args.palabras
     for word in wordList:
         print wordIndex[word]
-        print docIndex
+    #    print docIndex
 
 
 if __name__ == '__main__':
