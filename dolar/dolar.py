@@ -27,7 +27,9 @@ def get_html(url):
 def get_value_banamex(html):
     dolar = {}
     sopa=BeautifulSoup(html,'html.parser')
-    dolar['compra'] =  sopa.find(id='cotizaciones').find('div').find(id='monedas').find('tbody').find('tr').find('td').text
+    minisopas = sopa.find(id='cotizaciones').find('div').find(id='monedas').find('tbody').findAll('tr') #len=2
+    dolar['compra'] = float(minisopas[0].find('td').text)
+    dolar['venta'] = float(minisopas[1].find('td').text)
     return dolar
 
 
