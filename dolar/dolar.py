@@ -33,12 +33,11 @@ def get_value_banamex(html):
     return dolar
 
 
-
-
 def main():
     url_banamex = 'http://portal.banamex.com.mx/c719_004/economiaFinanzas/es/home?xhost=http://www.banamex.com/'
     html_banamex = get_html(url_banamex)
     dolar_banamex = get_value_banamex(html_banamex)
+    print time.strftime("%d-%m-%Y")+' '+time.strftime("%H:%M:%S")+', %.4f, %.4f' % (dolar_banamex['compra'], dolar_banamex['venta'])
 
 
 if __name__ == '__main__':
