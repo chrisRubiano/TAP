@@ -57,7 +57,10 @@ def get_value_banbajio(html):
 
 
 def main():
+    promCompra = 0
+    promVenta = 0
     acu = {'compra':[],'venta':[]}
+    promedio = {}
     #banamex
     banco = 'banamex'
     url = 'http://portal.banamex.com.mx/c719_004/economiaFinanzas/es/home?xhost=http://www.banamex.com/'
@@ -67,12 +70,22 @@ def main():
     console_print(banco, dolar)
     acumula_valores(acu, dolar)
     #banbajio
+    banco = 'banbajio'
     url = 'http://www.bb.com.mx/'
     html = get_html(url)
     dolar = get_value_banbajio(html)
     write_file(banco, dolar)
     console_print(banco, dolar)
     acumula_valores(acu, dolar)
+    #promedio
+    for valor in acu['compra']:
+        promCompra += valor
+    promedio['compra'] = promCompra / len(acu['compra'])
+    for valor in acu['venta']:
+        promVenta += valor
+    promedio['venta'] = promVenta / len(acu['venta'])
+    print 'promedio : %.4f | %.4f' % (promedio['compra'], promedio['venta'])
+
 
 if __name__ == '__main__':
     main()
