@@ -2,7 +2,7 @@
 '''
 Links:
 Banamex:            http://portal.banamex.com.mx/c719_004/economiaFinanzas/es/home?xhost=http://www.banamex.com/
-Bancomer:
+Bancomer:           https://bbv.infosel.com/bancomerindicators/indexV5.aspx
 Banjercito:         http://www.banjercito.com.mx/index.jsp?hd_ligaContenido=Informacion_financiera/redirectInfFin.jsp?operacion=6
 Banco del bajio:    http://www.bb.com.mx/
 
@@ -55,6 +55,14 @@ def get_value_banbajio(html):
     dolar['venta'] = float(minisopa[1].text)
     return dolar
 
+def get_value_bancomer(html):
+    dolar={}
+    sopa=BeautifulSoup(html, 'html.parser')
+    minisopa = sopa.find('tbody').findAll('td', { 'class' : ['letra']})
+    dolar ['compra'] = float(minisopa[3].text)
+    dolar ['venta'] = float(minisopa[5].text)
+    return dolar
+
 
 def main():
     promCompra = 0
@@ -74,6 +82,14 @@ def main():
     url = 'http://www.bb.com.mx/'
     html = get_html(url)
     dolar = get_value_banbajio(html)
+    write_file(banco, dolar)
+    console_print(banco, dolar)
+    acumula_valores(acu, dolar)
+    #bancomer
+    banco = 'bancomer'
+    url = 'https://bbv.infosel.com/bancomerindicators/indexV5.aspx'
+    html = get_html(url)
+    dolar = get_value_bancomer(html)
     write_file(banco, dolar)
     console_print(banco, dolar)
     acumula_valores(acu, dolar)
