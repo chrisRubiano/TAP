@@ -1,13 +1,11 @@
+##!/usr/bin/python
 # -*- coding: utf-8 -*-
 '''
-Links:
-Banamex:            http://portal.banamex.com.mx/c719_004/economiaFinanzas/es/home?xhost=http://www.banamex.com/
-Bancomer:           https://bbv.infosel.com/bancomerindicators/indexV5.aspx
-Banjercito:         http://www.banjercito.com.mx/index.jsp?hd_ligaContenido=Informacion_financiera/redirectInfFin.jsp?operacion=6
-Banco del bajio:    http://www.bb.com.mx/
-
-TODO:   try exception en cada metodo
-        escribir archivos
+Integrantes:
+    Cristian Samaniego
+    Emmanuelle Guerrero
+    Martin Ruiz
+    Erick Saldamando
 '''
 import urllib2
 from bs4 import BeautifulSoup
@@ -72,7 +70,7 @@ def get_value_banjercito(html):
     minisopas = minisopas[1].findAll('table')[1].findAll('tr')[2].findAll('td')
     dolar['compra'] = float(minisopas[2].text)
     dolar['venta'] = float(minisopas[3].text)
-    print dolar['compra']
+    return dolar
 
 
 def main():
@@ -81,7 +79,7 @@ def main():
     acu = {'compra':[],'venta':[]}
     promedio = {}
     #banamex
-    banco = 'banamex'
+    banco = 'Banamex'
     url = 'http://portal.banamex.com.mx/c719_004/economiaFinanzas/es/home?xhost=http://www.banamex.com/'
     html = get_html(url)
     dolar = get_value_banamex(html)
@@ -89,7 +87,7 @@ def main():
     console_print(banco, dolar)
     acumula_valores(acu, dolar)
     #banbajio
-    banco = 'banbajio'
+    banco = 'BanBajio'
     url = 'http://www.bb.com.mx/'
     html = get_html(url)
     dolar = get_value_banbajio(html)
@@ -97,7 +95,7 @@ def main():
     console_print(banco, dolar)
     acumula_valores(acu, dolar)
     #bancomer
-    banco = 'bancomer'
+    banco = 'Bancomer'
     url = 'https://bbv.infosel.com/bancomerindicators/indexV5.aspx'
     html = get_html(url)
     dolar = get_value_bancomer(html)
@@ -105,8 +103,8 @@ def main():
     console_print(banco, dolar)
     acumula_valores(acu, dolar)
     #banjercito
-    banco = 'banjercito'
-    url = 'http://www.banjercito.com.mx/index.jsp?hd_ligaContenido=Informacion_financiera/redirectInfFin.jsp?operacion=6'
+    banco = 'Banjercito'
+    url = 'http://banjercito.com.mx/informacionFinancieraCNT?operacion=6'
     html = get_html(url)
     dolar = get_value_banjercito(html)
     write_file(banco, dolar)
