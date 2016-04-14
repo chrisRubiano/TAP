@@ -55,6 +55,7 @@ def get_value_banbajio(html):
     dolar['venta'] = float(minisopa[1].text)
     return dolar
 
+
 def get_value_bancomer(html):
     dolar={}
     sopa=BeautifulSoup(html, 'html.parser')
@@ -62,6 +63,16 @@ def get_value_bancomer(html):
     dolar ['compra'] = float(minisopa[3].text)
     dolar ['venta'] = float(minisopa[5].text)
     return dolar
+
+
+def get_value_banjercito(html):
+    dolar = {}
+    sopa = BeautifulSoup(html,'html.parser')
+    minisopas = sopa.find(id='cuerpo_principal').find(id='cuerpo').find( 'div',{'class':'cuadro'}).find(id='nota_interna').findAll('div')
+    minisopas = minisopas[1].findAll('table')[1].findAll('tr')[2].findAll('td')
+    dolar['compra'] = float(minisopas[2].text)
+    dolar['venta'] = float(minisopas[3].text)
+    print dolar['compra']
 
 
 def main():
@@ -90,6 +101,14 @@ def main():
     url = 'https://bbv.infosel.com/bancomerindicators/indexV5.aspx'
     html = get_html(url)
     dolar = get_value_bancomer(html)
+    write_file(banco, dolar)
+    console_print(banco, dolar)
+    acumula_valores(acu, dolar)
+    #banjercito
+    banco = 'banjercito'
+    url = 'http://www.banjercito.com.mx/index.jsp?hd_ligaContenido=Informacion_financiera/redirectInfFin.jsp?operacion=6'
+    html = get_html(url)
+    dolar = get_value_banjercito(html)
     write_file(banco, dolar)
     console_print(banco, dolar)
     acumula_valores(acu, dolar)
