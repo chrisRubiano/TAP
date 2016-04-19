@@ -22,7 +22,7 @@ def console_print(banco, dolar):
 def write_file(fileName, dolar):
     file_name = fileName+".csv"
     with open(file_name, 'a') as fh:
-        fh.write(time.strftime("%d-%m-%Y")+' '+time.strftime("%H:%M:%S")+', %.4f, %.4f' % (dolar['compra'], dolar['venta']))
+        fh.write(time.strftime("%d-%m-%Y")+' '+time.strftime("%H:%M:%S")+', %.4f, %.4f\n' % (dolar['compra'], dolar['venta']))
 
 
 def get_html(url):
