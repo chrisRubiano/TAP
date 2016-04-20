@@ -11,17 +11,58 @@ from funciones import *
 import os
 
 
+def leer_banco(banco):
+    compraventa = {}
+    try:
+        with open(banco, 'r') as fh:
+            valores = fh.read().splitlines()
+            v = valores[:-1][1].split(',')
+            compraventa['compra'] = v[1]
+            compraventa['venta'] = v[2]
+    except:
+        compraventa['compra'] = 0
+        compraventa['venta'] = 0
+    return compraventa
+
+
 def main():
+    i = 0
+    c = 0
+    v = 0
+    precios = []
+    nombresbanco = []
     html = lee_archivo('esqueleto.html')
     sopa = BeautifulSoup(html, 'html.parser')
     sopa.title.string = "Mi pagina web"
     listabancos = sopa.findAll('td', { 'class' : ['banco']})
+    listacompra = sopa.findAll('td', { 'class' : ['compra']})
+    listaventa = sopa.findAll('td', { 'class' : ['venta']})
     bancos = os.listdir('.')
     for b in bancos:
         if b.endswith('.csv'):
-            #precios = leer_banco(b)
-            nombrebanco = b.split('.')
-            print nombrebanco[0]
+            precios.append(leer_banco(b))
+            nombresbanco.append(b.split('.')[0])
+    for l in listabancos:
+        l.string = nombresbanco[i]
+        i += 1
+    i = 0
+    for l in listacompra:
+        l.string = precios[i]['compra']
+        i += 1
+    i = 0
+    for l in listaventa:
+        l.string = precios[i]['venta']
+        i += 1
+    i = 0
+    for p in precios:
+        c += float(p['compra'])
+        v += float(p['venta'])
+    promcompra = c / len(precios)
+    promventa  = v / len(precios)
+    sopa.find('td', {'class' : 'compra-prom'}).string = str(promcompra)
+    sopa.find('td', {'class' : 'venta-prom'}).string = str(promventa)
+
+    print sopa.prettify()
 
 if __name__ == '__main__':
     main()
