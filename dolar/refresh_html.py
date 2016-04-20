@@ -16,7 +16,8 @@ def leer_banco(banco):
     try:
         with open(banco, 'r') as fh:
             valores = fh.read().splitlines()
-            v = valores[:-1][1].split(',')
+            v = valores[-1].split(',')
+            compraventa['fecha'] = v[0].split(' ')[0]
             compraventa['compra'] = v[1]
             compraventa['venta'] = v[2]
     except:
@@ -33,7 +34,10 @@ def main():
     nombresbanco = []
     html = lee_archivo('esqueleto.html')
     sopa = BeautifulSoup(html, 'html.parser')
-    sopa.title.string = "Mi pagina web"
+    sopa.title.string = "Precios del Dolar"
+    sopa.h1.string = "Dolar"
+    x = leer_banco('banamex.csv')
+    sopa.p.string = "Valores de compra y venta del dolar al dia %s" % x['fecha']
     listabancos = sopa.findAll('td', { 'class' : ['banco']})
     listacompra = sopa.findAll('td', { 'class' : ['compra']})
     listaventa = sopa.findAll('td', { 'class' : ['venta']})
@@ -59,8 +63,8 @@ def main():
         v += float(p['venta'])
     promcompra = c / len(precios)
     promventa  = v / len(precios)
-    sopa.find('td', {'class' : 'compra-prom'}).string = str(promcompra)
-    sopa.find('td', {'class' : 'venta-prom'}).string = str(promventa)
+    sopa.find('td', {'class' : 'compra-prom'}).string = str("%.4f" % promcompra)
+    sopa.find('td', {'class' : 'venta-prom'}).string = str("%.4f" % promventa)
 
     with open('index.html', 'w') as fh:
         fh.write(sopa.prettify())
