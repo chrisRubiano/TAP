@@ -62,7 +62,9 @@ def main():
     sopa.find('td', {'class' : 'compra-prom'}).string = str(promcompra)
     sopa.find('td', {'class' : 'venta-prom'}).string = str(promventa)
 
-    print sopa.prettify()
+    with open('index.html', 'w') as fh:
+        fh.write(sopa.prettify())
+
 
 if __name__ == '__main__':
     main()
