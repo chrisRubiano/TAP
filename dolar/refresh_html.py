@@ -36,11 +36,11 @@ def main():
     sopa = BeautifulSoup(html, 'html.parser')
     sopa.title.string = "Precios del Dolar"
     sopa.h1.string = "Dolar"
-    x = leer_banco('banamex.csv')
+    x = leer_banco('Banamex.csv')
     sopa.p.string = "Valores de compra y venta del dolar al dia %s" % x['fecha']
-    listabancos = sopa.findAll('td', { 'class' : ['banco']})
-    listacompra = sopa.findAll('td', { 'class' : ['compra']})
-    listaventa = sopa.findAll('td', { 'class' : ['venta']})
+    listabancos = sopa.findAll('td',{ 'class': ['banco']})
+    listacompra = sopa.findAll('td',{ 'class': ['compra']})
+    listaventa = sopa.findAll('td',{ 'class': ['venta']})
     bancos = os.listdir('.')
     for b in bancos:
         if b.endswith('.csv'):
@@ -57,14 +57,13 @@ def main():
     for l in listaventa:
         l.string = precios[i]['venta']
         i += 1
-    i = 0
     for p in precios:
         c += float(p['compra'])
         v += float(p['venta'])
     promcompra = c / len(precios)
-    promventa  = v / len(precios)
-    sopa.find('td', {'class' : 'compra-prom'}).string = str("%.4f" % promcompra)
-    sopa.find('td', {'class' : 'venta-prom'}).string = str("%.4f" % promventa)
+    promventa = v / len(precios)
+    sopa.find('td', {'class': 'compra-prom'}).string = str("%.4f" % promcompra)
+    sopa.find('td', {'class': 'venta-prom'}).string = str("%.4f" % promventa)
 
     with open('index.html', 'w') as fh:
         fh.write(sopa.prettify())
