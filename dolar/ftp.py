@@ -19,4 +19,5 @@ if __name__ == '__main__':
         print(r)
     directorio_local = os.listdir('.')
     place_file(ftp, 'Banamex.csv')
+    ftp.quit()
 
