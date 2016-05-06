@@ -24,19 +24,17 @@ def get_description(markup):
     listaux = descripcion.split(' ')
     for l in listaux:
         if 'Date:' in l:
-            fecha = listaux[listaux.index(l)+1]
+            date = listaux[listaux.index(l)+1]
     for l in listaux:
         if 'At' in l:
-            hora = listaux[listaux.index(l)+1]
+            hour = listaux[listaux.index(l)+1]
     for l in listaux:
         if 'delay' in l:
             delay = listaux[listaux.index(l)-2]+' '+listaux[listaux.index(l)-1]
     for l in listaux:
         if 'open' in l:
             openLanes = listaux[listaux.index(l)-2]+' '+listaux[listaux.index(l)-1]
-    print delay
-    print openLanes
-    return tag, descripcion
+    return tag, date, hour, delay, openLanes
 
 
 def main():
@@ -47,6 +45,7 @@ def main():
     sopaMar = BeautifulSoup(marML, "xml")
     sopaDec = BeautifulSoup(decML, "xml")
     descripcion_mariposa = get_description(marML)
+    print descripcion_mariposa
 
 if __name__ == '__main__':
     main()
